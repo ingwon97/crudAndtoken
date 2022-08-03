@@ -1,59 +1,46 @@
 package com.sparta.token.controller;
 
-import com.sparta.token.model.PasswordDto;
-import com.sparta.token.model.Post;
-import com.sparta.token.model.PostRequestDto;
-import com.sparta.token.repository.PostRepository;
+import com.sparta.token.dto.passwordDto;
+import com.sparta.token.dto.ResponseDto;
+import com.sparta.token.dto.PostRequestDto;
 import com.sparta.token.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class PostController {
 
     private final PostService postService;
-    private final PostRepository postRepository;
 
-    // 모든 데이터 전달
-    @GetMapping("/api/post")
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+    @PostMapping("/api/post")
+    public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto) {
+        return postService.createPost(requestDto);
     }
 
     @GetMapping("/api/post/{id}")
-    public Post getPost(@PathVariable Long id) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("데이터가 없습니다.")
-        );
-
-        return post;
+    public ResponseDto<?> getPost(@PathVariable Long id) {
+        return postService.getPost(id);
     }
 
-    @PostMapping("/api/post")
-    public Long createPost(@RequestBody PostRequestDto requestDto) {
-        return postService.createPost(requestDto).getId();
-    }
-
-    @PostMapping("/api/post/{id}")
-    public boolean checkPw(@PathVariable Long id, @RequestBody PasswordDto passwordDto) {
-        if(postService.checkPw(id, passwordDto))
-            return true;
-        else
-            return false;
+    @GetMapping("/api/post")
+    public ResponseDto<?> getAllPosts() {
+        return postService.getAllPost();
     }
 
     @PutMapping("/api/post/{id}")
-    public Post updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
-        Post post = postService.update(id, requestDto);
-        return post;
+    public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+        return postService.updatePost(id, postRequestDto);
     }
 
     @DeleteMapping("/api/post/{id}")
-    public Long deletePost(@PathVariable Long id) {
-        postRepository.deleteById(id);
-        return id;
+    public ResponseDto<?> deletePost(@PathVariable Long id) {
+        return postService.deletePost(id);
     }
+
+    @PostMapping("/api/post/{id}")
+    public ResponseDto<?> validateAuthorByPassword(@PathVariable Long id, @RequestBody passwordDto password) {
+        return postService.validateAuthorByPassword(id, password);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.sparta.token.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.token.dto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Post {
+public class Post extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,7 @@ public class Post {
     @Column(nullable = false)
     private String author;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

@@ -1,4 +1,4 @@
-package com.sparta.token.model;
+package com.sparta.token.dto;
 
 import lombok.Getter;
 
