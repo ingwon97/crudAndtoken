@@ -1,9 +1,9 @@
-package com.sparta.token.controller;
+package com.sparat.token.controller;
 
-import com.sparta.token.dto.passwordDto;
-import com.sparta.token.dto.ResponseDto;
-import com.sparta.token.dto.PostRequestDto;
-import com.sparta.token.service.PostService;
+import com.sparat.token.dto.PostRequestDto;
+import com.sparat.token.dto.ResponseDto;
+import com.sparat.token.dto.passwordDto;
+import com.sparat.token.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

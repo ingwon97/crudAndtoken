@@ -1,4 +1,4 @@
-package com.sparta.token.provider;
+package com.sparat.token.provider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

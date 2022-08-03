@@ -1,4 +1,4 @@
-package com.sparta.token.model;
+package com.sparat.token.model;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

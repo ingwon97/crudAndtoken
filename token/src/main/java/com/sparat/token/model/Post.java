@@ -1,7 +1,7 @@
-package com.sparta.token.model;
+package com.sparat.token.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sparta.token.dto.PostRequestDto;
+import com.sparat.token.dto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

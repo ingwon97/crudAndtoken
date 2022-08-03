@@ -1,10 +1,10 @@
-package com.sparta.token.service;
+package com.sparat.token.service;
 
-import com.sparta.token.dto.passwordDto;
-import com.sparta.token.dto.ResponseDto;
-import com.sparta.token.model.Post;
-import com.sparta.token.dto.PostRequestDto;
-import com.sparta.token.repository.PostRepository;
+import com.sparat.token.dto.PostRequestDto;
+import com.sparat.token.dto.ResponseDto;
+import com.sparat.token.dto.passwordDto;
+import com.sparat.token.model.Post;
+import com.sparat.token.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
