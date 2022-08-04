@@ -1,5 +1,6 @@
-package com.sparat.token.domains.auth.domain;
+package com.sparat.token.repository;
 
+import com.sparat.token.model.AuthEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

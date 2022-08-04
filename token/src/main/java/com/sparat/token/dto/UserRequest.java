@@ -1,4 +1,4 @@
-package com.sparat.token.domains.users.application.dto;
+package com.sparat.token.dto;
 
 import lombok.Getter;
 

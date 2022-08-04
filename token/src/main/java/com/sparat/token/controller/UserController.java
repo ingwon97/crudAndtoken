@@ -1,9 +1,9 @@
-package com.sparat.token.domains.users.presentation;
+package com.sparat.token.controller;
 
-import com.sparat.token.domains.users.application.UserService;
-import com.sparat.token.domains.users.application.dto.TokenResponse;
-import com.sparat.token.domains.users.application.dto.UserRequest;
-import com.sparat.token.domains.users.domain.UsersEntity;
+import com.sparat.token.service.UserService;
+import com.sparat.token.dto.TokenResponse;
+import com.sparat.token.dto.UserRequest;
+import com.sparat.token.model.UsersEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,12 +1,12 @@
-package com.sparat.token.domains.users.application;
+package com.sparat.token.service;
 
 import com.sparat.token.commons.Jwt.TokenUtils;
-import com.sparat.token.domains.auth.domain.AuthEntity;
-import com.sparat.token.domains.auth.domain.AuthRepository;
-import com.sparat.token.domains.users.application.dto.TokenResponse;
-import com.sparat.token.domains.users.application.dto.UserRequest;
-import com.sparat.token.domains.users.domain.UsersEntity;
-import com.sparat.token.domains.users.domain.UsersRepository;
+import com.sparat.token.model.AuthEntity;
+import com.sparat.token.repository.AuthRepository;
+import com.sparat.token.dto.TokenResponse;
+import com.sparat.token.dto.UserRequest;
+import com.sparat.token.model.UsersEntity;
+import com.sparat.token.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

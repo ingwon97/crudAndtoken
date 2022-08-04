@@ -5,6 +5,7 @@ import com.sparat.token.dto.ResponseDto;
 import com.sparat.token.dto.passwordDto;
 import com.sparat.token.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

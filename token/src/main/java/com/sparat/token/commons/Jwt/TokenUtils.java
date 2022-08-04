@@ -1,7 +1,7 @@
 package com.sparat.token.commons.Jwt;
 
 
-import com.sparat.token.domains.users.domain.UsersEntity;
+import com.sparat.token.model.UsersEntity;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

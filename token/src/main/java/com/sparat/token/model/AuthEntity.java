@@ -1,6 +1,6 @@
-package com.sparat.token.domains.auth.domain;
+package com.sparat.token.model;
 
-import com.sparat.token.domains.users.domain.UsersEntity;
+import com.sparat.token.model.UsersEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
