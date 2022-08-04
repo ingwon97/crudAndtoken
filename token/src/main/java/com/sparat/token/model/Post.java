@@ -2,9 +2,11 @@ package com.sparat.token.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparat.token.dto.UserRequest;
+import com.sparat.token.dto.UsersDetailsImpl;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
@@ -26,22 +28,16 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String author;
 
-    public Post(String title, String content, String author) {
-        this.title = title;
-        this.content = content;
-        this.author = author;
-    }
-
-    public Post(PostRequestDto requestDto) {
+    public Post(UsersDetailsImpl userDetails, PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.author = requestDto.getAuthor();
+        this.author = userDetails.getUsername();
     }
 
-    public void update(UserRequest requestDto) {
+    public void update(UsersDetailsImpl usersDetails, PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.author = requestDto.getAuthor();
+        this.author = usersDetails.getUsername();
     }
 
 }

@@ -20,12 +20,6 @@ public class UsersEntity extends Timestamped{
   private String role = "ROLE_MEMBER";
 
   @Column(nullable = false)
-  private String title;
-
-  @Column(nullable = false)
-  private String content;
-
-  @Column(nullable = false)
   private String author;
 
   @JsonIgnore
@@ -34,23 +28,12 @@ public class UsersEntity extends Timestamped{
 
 
   @Builder
-  public UsersEntity(String title, String content, String author, String password) {
-    this.title = title;
-    this.content = content;
+  public UsersEntity(String author, String password) {
     this.author = author;
     this.password = password;
   }
 
   public UsersEntity(UserRequest requestDto) {
-    this.title = requestDto.getTitle();
-    this.content = requestDto.getContent();
-    this.author = requestDto.getAuthor();
-    this.password = requestDto.getPassword();
-  }
-
-  public void update(UserRequest requestDto) {
-    this.title = requestDto.getTitle();
-    this.content = requestDto.getContent();
     this.author = requestDto.getAuthor();
     this.password = requestDto.getPassword();
   }

@@ -33,8 +33,6 @@ public class UserService {
         UsersEntity usersEntity =
                 usersRepository.save(
                         UsersEntity.builder()
-                                .title(userRequest.getTitle())
-                                .content(userRequest.getContent())
                                 .password(passwordEncoder.encode(userRequest.getPassword()))
                                 .author(userRequest.getAuthor())
                                 .build());

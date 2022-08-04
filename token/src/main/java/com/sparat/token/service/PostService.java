@@ -1,6 +1,7 @@
 package com.sparat.token.service;
 
 import com.sparat.token.dto.UserRequest;
+import com.sparat.token.dto.UsersDetailsImpl;
 import com.sparat.token.model.Post;
 import com.sparat.token.model.PostRequestDto;
 import com.sparat.token.model.UsersEntity;
@@ -9,6 +10,8 @@ import com.sparat.token.repository.UsersRepository;
 import com.sparat.token.dto.ResponseDto;
 import com.sparat.token.dto.passwordDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +25,9 @@ public class PostService {
     private final UsersRepository usersRepository;
 
     @Transactional
-    public ResponseDto<?> createPost(PostRequestDto requestDto) {
+    public ResponseDto<?> createPost(UsersDetailsImpl usersDetails, PostRequestDto requestDto) {
 
-        Post post = new Post(requestDto);
+        Post post = new Post(usersDetails, requestDto);
 
         postRepository.save(post);
 
@@ -48,7 +51,7 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto<Post> updatePost(Long id, UserRequest requestDto) {
+    public ResponseDto<Post> updatePost(UsersDetailsImpl usersDetails, Long id, PostRequestDto requestDto) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -56,13 +59,13 @@ public class PostService {
         }
 
         Post post = optionalPost.get();
-        post.update(requestDto);
+        post.update(usersDetails, requestDto);
 
         return ResponseDto.success(post);
     }
 
     @Transactional
-    public ResponseDto<?> deletePost(Long id) {
+    public ResponseDto<?> deletePost(UsersDetailsImpl userDetails, Long id) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -78,7 +81,7 @@ public class PostService {
 
     // 여기는 비밀번호 검증을 위해서 UsersEntity로 받음
     @Transactional(readOnly = true)
-    public ResponseDto<?> validateAuthorByPassword(Long id, passwordDto password) {
+    public ResponseDto<?> validateAuthorByPassword(UsersDetailsImpl userDetails, Long id) {
         Optional<UsersEntity> optionalPost = usersRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -87,7 +90,7 @@ public class PostService {
 
         UsersEntity usersEntity = optionalPost.get();
 
-        if (!usersEntity.getPassword().equals(password.getPassword())) {
+        if (!usersEntity.getPassword().equals(userDetails.getPassword())) {
             return ResponseDto.fail("PASSWORD_NOT_CORRECT", "password is not correct");
         }
 
