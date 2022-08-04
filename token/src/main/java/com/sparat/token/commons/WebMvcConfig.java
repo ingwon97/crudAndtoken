@@ -15,4 +15,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     System.out.println("인터셉터 등록");
     registry.addInterceptor(jwtTokenInterceptor).addPathPatterns("/info");
   }
+
+
 }

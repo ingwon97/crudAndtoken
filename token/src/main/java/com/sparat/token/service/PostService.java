@@ -1,5 +1,6 @@
 package com.sparat.token.service;
 
+import com.sparat.token.domains.auth.domain.UserDetailsImpl;
 import com.sparat.token.dto.PostRequestDto;
 import com.sparat.token.dto.ResponseDto;
 import com.sparat.token.dto.passwordDto;
@@ -18,10 +19,9 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public ResponseDto<?> createPost(PostRequestDto requestDto) {
+    public ResponseDto<?> createPost(UserDetailsImpl userDetails, PostRequestDto requestDto) {
 
-        Post post = new Post(requestDto);
-
+        Post post = new Post(userDetails, requestDto);
         postRepository.save(post);
 
         return ResponseDto.success(post);
@@ -44,7 +44,7 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto<Post> updatePost(Long id, PostRequestDto requestDto) {
+    public ResponseDto<Post> updatePost(UserDetailsImpl userDetails, Long id, PostRequestDto requestDto) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -52,13 +52,16 @@ public class PostService {
         }
 
         Post post = optionalPost.get();
-        post.update(requestDto);
 
+        if (!userDetails.getUsername().equals(post.getAuthor()))
+            return ResponseDto.fail("NOT_FOUND", "post 주인이 아님");
+
+        post.update(requestDto);
         return ResponseDto.success(post);
     }
 
     @Transactional
-    public ResponseDto<?> deletePost(Long id) {
+    public ResponseDto<?> deletePost(UserDetailsImpl userDetails, Long id) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -67,8 +70,11 @@ public class PostService {
 
         Post post = optionalPost.get();
 
-        postRepository.delete(post);
+        if (!userDetails.getUser().getNickname().equals(post.getAuthor())) {
+            return ResponseDto.fail("NOT_FOUND", "post 주인이 아님");
+        }
 
+        postRepository.delete(post);
         return ResponseDto.success(true);
     }
 

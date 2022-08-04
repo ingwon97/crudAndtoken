@@ -6,7 +6,7 @@ import com.sparat.token.domains.auth.domain.AuthRepository;
 import com.sparat.token.domains.users.application.dto.TokenResponse;
 import com.sparat.token.domains.users.application.dto.UserRequest;
 import com.sparat.token.domains.users.domain.UsersEntity;
-import com.sparat.token.domains.users.domain.UsersRepository;
+import com.sparat.token.domains.users.domain.UsersEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-  private final UsersRepository usersRepository;
+  private final UsersEntityRepository usersEntityRepository;
   private final TokenUtils tokenUtils;
   private final AuthRepository authRepository;
   private final PasswordEncoder passwordEncoder;
 
   public Optional<UsersEntity> findByUserId(String userId) {
 
-    return usersRepository.findByUserId(userId);
+    return usersEntityRepository.findByUserId(userId);
   }
 
   @Transactional
   public TokenResponse signUp(UserRequest userRequest) {
     UsersEntity usersEntity =
-        usersRepository.save(
+        usersEntityRepository.save(
             UsersEntity.builder()
-                .pw(passwordEncoder.encode(userRequest.getUserPw()))
+                .password(passwordEncoder.encode(userRequest.getUserPw()))
                 .userId(userRequest.getUserId())
                 .build());
 
@@ -49,14 +49,14 @@ public class UserService {
   @Transactional
   public TokenResponse signIn(UserRequest userRequest) throws Exception {
     UsersEntity usersEntity =
-        usersRepository
+        usersEntityRepository
             .findByUserId(userRequest.getUserId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     AuthEntity authEntity =
         authRepository
             .findByUsersEntityId(usersEntity.getId())
             .orElseThrow(() -> new IllegalArgumentException("Token 이 존재하지 않습니다."));
-    if (!passwordEncoder.matches(userRequest.getUserPw(), usersEntity.getPw())) {
+    if (!passwordEncoder.matches(userRequest.getUserPw(), usersEntity.getPassword())) {
       throw new Exception("비밀번호가 일치하지 않습니다.");
     }
     String accessToken = "";
@@ -78,6 +78,7 @@ public class UserService {
   }
 
   public List<UsersEntity> findUsers() {
-    return usersRepository.findAll();
+    return usersEntityRepository.findAll();
   }
+
 }

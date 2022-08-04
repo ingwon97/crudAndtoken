@@ -19,6 +19,7 @@ public class UserController {
 
   private final UserService userService;
 
+  // 회원가입
   @PostMapping("/user/signUp")
   public ResponseEntity signUp(@RequestBody UserRequest userRequest) {
     return userService.findByUserId(userRequest.getUserId()).isPresent()
@@ -26,9 +27,9 @@ public class UserController {
         : ResponseEntity.ok(userService.signUp(userRequest));
   }
 
+  // 로그인
   @PostMapping("/user/signIn")
   public ResponseEntity<TokenResponse> signIn(@RequestBody UserRequest userRequest) throws Exception {
-
     return ResponseEntity.ok().body(userService.signIn(userRequest));
   }
 
@@ -36,4 +37,5 @@ public class UserController {
   public ResponseEntity<List<UsersEntity>> findUser() {
     return ResponseEntity.ok().body(userService.findUsers());
   }
+
 }

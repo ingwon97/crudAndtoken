@@ -1,6 +1,7 @@
 package com.sparat.token.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparat.token.domains.auth.domain.UserDetailsImpl;
 import com.sparat.token.dto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,10 +32,10 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String password;
 
-    public Post(PostRequestDto requestDto) {
+    public Post(UserDetailsImpl userDetails, PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.author = requestDto.getAuthor();
+        this.author = userDetails.getUsername();
         this.password = requestDto.getPassword();
     }
 
