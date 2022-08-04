@@ -3,6 +3,7 @@ package com.sparat.token.controller;
 import com.sparat.token.dto.ResponseDto;
 import com.sparat.token.dto.UserRequest;
 import com.sparat.token.dto.passwordDto;
+import com.sparat.token.model.PostRequestDto;
 import com.sparat.token.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/api/post")
-    public ResponseDto<?> createPost(@RequestBody UserRequest requestDto) {
+    public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto) {
         return postService.createPost(requestDto);
     }
 

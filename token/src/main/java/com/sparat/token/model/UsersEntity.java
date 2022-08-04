@@ -55,9 +55,4 @@ public class UsersEntity extends Timestamped{
     this.password = requestDto.getPassword();
   }
 
-  /*@Builder
-  public UsersEntity(String userId, String password) {
-    this.nickname = userId;
-    this.password = password;
-  }*/
 }
