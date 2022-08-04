@@ -1,9 +1,9 @@
-package com.sparat.token.domains.users.presentation;
+package com.sparat.token.controller;
 
-import com.sparat.token.domains.users.application.UserService;
-import com.sparat.token.domains.users.application.dto.TokenResponse;
-import com.sparat.token.domains.users.application.dto.UserRequest;
-import com.sparat.token.domains.users.domain.UsersEntity;
+import com.sparat.token.service.UserService;
+import com.sparat.token.dto.TokenResponse;
+import com.sparat.token.dto.UserRequest;
+import com.sparat.token.model.UsersEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class UserController {
   // 회원가입
   @PostMapping("/user/signUp")
   public ResponseEntity signUp(@RequestBody UserRequest userRequest) {
-    return userService.findByUserId(userRequest.getUserId()).isPresent()
+    return userService.findByAuthor(userRequest.getAuthor()).isPresent()
         ? ResponseEntity.badRequest().build()
         : ResponseEntity.ok(userService.signUp(userRequest));
   }
@@ -30,6 +30,7 @@ public class UserController {
   // 로그인
   @PostMapping("/user/signIn")
   public ResponseEntity<TokenResponse> signIn(@RequestBody UserRequest userRequest) throws Exception {
+
     return ResponseEntity.ok().body(userService.signIn(userRequest));
   }
 
@@ -37,5 +38,4 @@ public class UserController {
   public ResponseEntity<List<UsersEntity>> findUser() {
     return ResponseEntity.ok().body(userService.findUsers());
   }
-
 }

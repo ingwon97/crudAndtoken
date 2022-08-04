@@ -1,9 +1,10 @@
 package com.sparat.token.controller;
 
-import com.sparat.token.domains.auth.domain.UserDetailsImpl;
-import com.sparat.token.dto.PostRequestDto;
 import com.sparat.token.dto.ResponseDto;
+import com.sparat.token.dto.UserRequest;
+import com.sparat.token.dto.UsersDetailsImpl;
 import com.sparat.token.dto.passwordDto;
+import com.sparat.token.model.PostRequestDto;
 import com.sparat.token.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,12 @@ public class PostController {
 
     private final PostService postService;
 
+    @PostMapping("/api/post")
+    public ResponseDto<?> createPost(@AuthenticationPrincipal UsersDetailsImpl usersDetails,
+                                     @RequestBody PostRequestDto requestDto) {
+        return postService.createPost(usersDetails, requestDto);
+    }
+
     @GetMapping("/api/post/{id}")
     public ResponseDto<?> getPost(@PathVariable Long id) {
         return postService.getPost(id);
@@ -25,30 +32,27 @@ public class PostController {
         return postService.getAllPost();
     }
 
-    @PostMapping("/api/post")
-    public ResponseDto<?> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                     @RequestBody PostRequestDto requestDto) {
-        return postService.createPost(userDetails, requestDto);
-    }
-
     @PutMapping("/api/post/{id}")
-    public ResponseDto<?> updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                     @PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
-        return postService.updatePost(userDetails, id, postRequestDto);
+    public ResponseDto<?> updatePost(@AuthenticationPrincipal UsersDetailsImpl usersDetails,
+                                     @PathVariable Long id, @RequestBody PostRequestDto requestDto) {
+        return postService.updatePost(usersDetails, id, requestDto);
     }
 
     @DeleteMapping("/api/post/{id}")
-    public ResponseDto<?> deletePost(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long id) {
-
-        return postService.deletePost(userDetails, id);
+    public ResponseDto<?> deletePost(@AuthenticationPrincipal UsersDetailsImpl usersDetails,
+                                     @PathVariable Long id) {
+        return postService.deletePost(usersDetails, id);
     }
 
     @PostMapping("/api/post/{id}")
-    public ResponseDto<?> validateAuthorByPassword(
-            @PathVariable Long id,
-            @RequestBody passwordDto password) {
-        return postService.validateAuthorByPassword(id, password);
+    public ResponseDto<?> validateAuthorByPassword(@AuthenticationPrincipal UsersDetailsImpl usersDetails,
+                                                   @PathVariable Long id) {
+        return postService.validateAuthorByPassword(usersDetails, id);
     }
+
+    @GetMapping("/whoami")
+    public String whoAmI(@AuthenticationPrincipal UsersDetailsImpl usersDetails) {
+        return usersDetails.getUsername();
+    }
+
 }

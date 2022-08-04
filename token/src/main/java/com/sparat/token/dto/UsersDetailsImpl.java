@@ -1,22 +1,27 @@
-package com.sparat.token.domains.auth.domain;
+package com.sparat.token.dto;
 
-import com.sparat.token.domains.users.domain.UsersEntity;
+import com.sparat.token.model.UsersEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class UserDetailsImpl implements UserDetails {
+public class UsersDetailsImpl implements UserDetails {
 
     private final UsersEntity user;
 
-    public UserDetailsImpl(UsersEntity user) {
+    public UsersDetailsImpl(UsersEntity user) {
         this.user = user;
     }
 
-    public UsersEntity getUser() {
-        return user;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(user::getRole);
+        return authorities;
     }
 
     @Override
@@ -26,34 +31,26 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getNickname();
+        return user.getAuthor();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(user::getRole);
-        return authorities;
+        return false;
     }
 }

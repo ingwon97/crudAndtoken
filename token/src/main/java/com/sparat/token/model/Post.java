@@ -1,22 +1,22 @@
 package com.sparat.token.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sparat.token.domains.auth.domain.UserDetailsImpl;
-import com.sparat.token.dto.PostRequestDto;
-import lombok.AllArgsConstructor;
+import com.sparat.token.dto.UserRequest;
+import com.sparat.token.dto.UsersDetailsImpl;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@RequiredArgsConstructor
+@Entity
 public class Post extends Timestamped{
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
 
     @Column(nullable = false)
@@ -28,21 +28,16 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String author;
 
-    @JsonIgnore
-    @Column(nullable = false)
-    private String password;
-
-    public Post(UserDetailsImpl userDetails, PostRequestDto requestDto) {
+    public Post(UsersDetailsImpl userDetails, PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.author = userDetails.getUsername();
-        this.password = requestDto.getPassword();
     }
 
-    public void update(PostRequestDto requestDto) {
+    public void update(UsersDetailsImpl usersDetails, PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.author = requestDto.getAuthor();
-        this.password = requestDto.getPassword();
+        this.author = usersDetails.getUsername();
     }
+
 }

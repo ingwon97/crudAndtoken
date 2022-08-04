@@ -1,4 +1,4 @@
-package com.sparat.token.dto;
+package com.sparat.token.model;
 
 import lombok.Getter;
 
@@ -6,6 +6,4 @@ import lombok.Getter;
 public class PostRequestDto {
     private String title;
     private String content;
-    private String author;
-    private String password;
 }
