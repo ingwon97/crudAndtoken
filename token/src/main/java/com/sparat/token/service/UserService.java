@@ -25,7 +25,7 @@ public class UserService {
 
   public Optional<UsersEntity> findByUserId(String userId) {
 
-    return usersRepository.findByUserId(userId);
+    return usersRepository.findByNickname(userId);
   }
 
   @Transactional
@@ -33,8 +33,8 @@ public class UserService {
     UsersEntity usersEntity =
         usersRepository.save(
             UsersEntity.builder()
-                .pw(passwordEncoder.encode(userRequest.getUserPw()))
-                .userId(userRequest.getUserId())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .userId(userRequest.getNickname())
                 .build());
 
     String accessToken = tokenUtils.generateJwtToken(usersEntity);
@@ -50,13 +50,13 @@ public class UserService {
   public TokenResponse signIn(UserRequest userRequest) throws Exception {
     UsersEntity usersEntity =
         usersRepository
-            .findByUserId(userRequest.getUserId())
+            .findByNickname(userRequest.getNickname())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     AuthEntity authEntity =
         authRepository
             .findByUsersEntityId(usersEntity.getId())
             .orElseThrow(() -> new IllegalArgumentException("Token 이 존재하지 않습니다."));
-    if (!passwordEncoder.matches(userRequest.getUserPw(), usersEntity.getPw())) {
+    if (!passwordEncoder.matches(userRequest.getPassword(), usersEntity.getPassword())) {
       throw new Exception("비밀번호가 일치하지 않습니다.");
     }
     String accessToken = "";

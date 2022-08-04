@@ -23,7 +23,7 @@ public class TokenUtils {
 
   public String generateJwtToken(UsersEntity usersEntity) {
     return Jwts.builder()
-        .setSubject(usersEntity.getUserId())
+        .setSubject(usersEntity.getNickname())
         .setHeader(createHeader())
         .setClaims(createClaims(usersEntity))
         .setExpiration(createExpireDate(1000 * 60 * 5))
@@ -33,7 +33,7 @@ public class TokenUtils {
 
   public String saveRefreshToken(UsersEntity usersEntity) {
     return Jwts.builder()
-        .setSubject(usersEntity.getUserId())
+        .setSubject(usersEntity.getNickname())
         .setHeader(createHeader())
         .setClaims(createClaims(usersEntity))
         .setExpiration(createExpireDate(1000 * 60 * 10))
@@ -97,7 +97,7 @@ public class TokenUtils {
 
   private Map<String, Object> createClaims(UsersEntity usersEntity) {
     Map<String, Object> claims = new HashMap<>();
-    claims.put(DATA_KEY, usersEntity.getUserId());
+    claims.put(DATA_KEY, usersEntity.getNickname());
     return claims;
   }
 

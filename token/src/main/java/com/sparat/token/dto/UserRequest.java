@@ -4,6 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class UserRequest {
-   private String userId;
-   private String userPw;
+   private String nickname;
+   private String title;
+   private String content;
+   private String author;
+   private String password;
 }

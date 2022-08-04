@@ -17,8 +17,7 @@ public class UsersEntity extends Timestamped{
   @Id
   private Long id;
 
-  private String userId;
-  private String pw;
+  private String nickname;
 
   @Column(nullable = false)
   private String role = "ROLE_MEMBER";
@@ -52,8 +51,8 @@ public class UsersEntity extends Timestamped{
   }
 
   @Builder
-  public UsersEntity(String userId, String pw) {
-    this.userId = userId;
-    this.pw = pw;
+  public UsersEntity(String userId, String password) {
+    this.nickname = userId;
+    this.password = password;
   }
 }
