@@ -38,13 +38,14 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
             .loginPage("/user/signIn")
-            .loginProcessingUrl("/user/signIn")
             .permitAll()
             .and()
             .logout()
             // 로그아웃 요청 처리 URL
             .logoutUrl("/user/logout")
             .permitAll();
+    /*            .formLogin().disable()
+            .httpBasic().disable();*/
 //            .httpBasic().disable();
   }
   @Bean
