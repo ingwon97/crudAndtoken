@@ -19,13 +19,15 @@ public class UserController {
 
   private final UserService userService;
 
+  // 회원가입
   @PostMapping("/user/signUp")
   public ResponseEntity signUp(@RequestBody UserRequest userRequest) {
-    return userService.findByUserId(userRequest.getNickname()).isPresent()
+    return userService.findByUserId(userRequest.getAuthor()).isPresent()
         ? ResponseEntity.badRequest().build()
         : ResponseEntity.ok(userService.signUp(userRequest));
   }
 
+  // 로그인
   @PostMapping("/user/signIn")
   public ResponseEntity<TokenResponse> signIn(@RequestBody UserRequest userRequest) throws Exception {
 

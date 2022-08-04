@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsersRepository extends JpaRepository<UsersEntity,Long> {
-    Optional<UsersEntity> findByNickname(String userId);
+    Optional<UsersEntity> findByAuthor(String userId);
     List<UsersEntity> findAllByOrderByModifiedAtDesc();
 
 }

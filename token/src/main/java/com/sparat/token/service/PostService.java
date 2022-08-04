@@ -1,8 +1,8 @@
 package com.sparat.token.service;
 
+import com.sparat.token.dto.UserRequest;
 import com.sparat.token.model.UsersEntity;
 import com.sparat.token.repository.UsersRepository;
-import com.sparat.token.dto.PostRequestDto;
 import com.sparat.token.dto.ResponseDto;
 import com.sparat.token.dto.passwordDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class PostService {
     private final UsersRepository postRepository;
 
     @Transactional
-    public ResponseDto<?> createPost(PostRequestDto requestDto) {
+    public ResponseDto<?> createPost(UserRequest requestDto) {
 
         UsersEntity post = new UsersEntity(requestDto);
 
@@ -44,7 +44,7 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto<UsersEntity> updatePost(Long id, PostRequestDto requestDto) {
+    public ResponseDto<UsersEntity> updatePost(Long id, UserRequest requestDto) {
         Optional<UsersEntity> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {

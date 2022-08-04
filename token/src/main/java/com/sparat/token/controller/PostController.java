@@ -1,11 +1,10 @@
 package com.sparat.token.controller;
 
-import com.sparat.token.dto.PostRequestDto;
 import com.sparat.token.dto.ResponseDto;
+import com.sparat.token.dto.UserRequest;
 import com.sparat.token.dto.passwordDto;
 import com.sparat.token.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -15,7 +14,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/api/post")
-    public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto) {
+    public ResponseDto<?> createPost(@RequestBody UserRequest requestDto) {
         return postService.createPost(requestDto);
     }
 
@@ -30,8 +29,8 @@ public class PostController {
     }
 
     @PutMapping("/api/post/{id}")
-    public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
-        return postService.updatePost(id, postRequestDto);
+    public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody UserRequest userRequest) {
+        return postService.updatePost(id, userRequest);
     }
 
     @DeleteMapping("/api/post/{id}")
